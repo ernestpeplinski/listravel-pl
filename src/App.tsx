@@ -1,14 +1,13 @@
 
-import logo from './assets/logo_1000x1000.png'
 import './App.css'
+import Header from './layout/Header'
 
-function App() {
+const App = () => {
   return (
-    <div id="root">
-      <img src={logo} className="logo" alt="Logo" />
-      <h2>Strona w budowie</h2>
-      <p>Będzie dostępna wkrótce.</p>
-    </div>
+    <>
+    <Header />
+    </>
+
   )
 }
 
