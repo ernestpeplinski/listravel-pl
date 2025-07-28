@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import groupPhoto from "../assets/wycieczka1.jpg";
 import chairPhoto from "../assets/sewerynipiotr.jpg";
