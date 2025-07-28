@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import chairPhoto from "../assets/sewerynipiotr.jpg";
 import chairPhoto2 from "../assets/sewerynipiotr2.jpg";
@@ -7,6 +5,7 @@ import wycieczka2 from "../assets/wycieczka2.jpg";
 import wycieczka3 from "../assets/wycieczka3.jpg";
 import wycieczka4 from "../assets/wycieczka4.jpg";
 import wycieczka5 from "../assets/wycieczka5.jpg";
+import AboutContent from "../components/AboutContent";
 
 const About: React.FC = () => {
   const [modalImg, setModalImg] = useState<string | null>(null);
@@ -25,12 +24,7 @@ const About: React.FC = () => {
             <img src={chairPhoto} alt="Założyciele firmy na dużym krześle" />
           </div>
         </div>
-        <div className="about-content">
-          <h2>O nas</h2>
-          <p>
-            <strong>Lis Travel & Events</strong> to firma specjalizująca się w organizacji wycieczek autokarowych, imprez turystycznych oraz imprez integracyjnych. Działamy od maja 2023 roku, a założycielami firmy są Seweryn Lemke i Piotr Słomiński. Naszą misją jest tworzenie niezapomnianych przeżyć i integracja ludzi poprzez wspólne podróże i wydarzenia.
-          </p>
-        </div>
+        <AboutContent />
         <div className="about-row-mobile-top">
           <div className="about-side-image">
             <img src={chairPhoto2} alt="Założyciele firmy przy pomniku" />
@@ -78,7 +72,10 @@ const About: React.FC = () => {
               boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
               background: "#fff",
             }}
-            onClick={e => { e.stopPropagation(); setModalImg(null); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setModalImg(null);
+            }}
           />
         </div>
       )}

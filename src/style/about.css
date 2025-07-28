@@ -100,13 +100,13 @@
 .about-section.styled-about {
   background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
   border-radius: 32px;
-  box-shadow: 0 8px 32px rgba(60, 80, 120, 0.10);
+  box-shadow: 0 8px 32px rgba(60, 80, 120, 0.1);
   padding: 3.5rem 1.5rem 2.5rem 1.5rem;
   margin: 2.5rem auto 2rem auto;
   max-width: 1300px;
   position: relative;
   overflow: hidden;
-  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
 .about-row {
@@ -129,7 +129,7 @@
 .about-side-image {
   background: #fff;
   border-radius: 18px;
-  box-shadow: 0 2px 16px rgba(60, 80, 120, 0.10);
+  box-shadow: 0 2px 16px rgba(60, 80, 120, 0.1);
   padding: 0.5rem;
   display: flex;
   align-items: center;
@@ -155,10 +155,10 @@
 }
 
 .about-content {
-  background: rgba(255,255,255,0.92);
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 18px;
   box-shadow: 0 2px 16px rgba(60, 80, 120, 0.08);
-  padding: 2.2rem 2.2rem 1.2rem 2.2rem;
+  padding: 0.2rem 2.2rem 1.2rem 2.2rem;
   min-width: 260px;
   max-width: 700px;
   text-align: center;
@@ -179,10 +179,10 @@
   padding-left: 8px;
   padding-right: 8px;
 }
-  .about-content p {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+.about-content p {
+  padding-left: 20px;
+  padding-right: 20px;
+}
 .about-content strong {
   color: #1e293b;
   font-weight: 700;
@@ -208,7 +208,7 @@
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 16px rgba(60, 80, 120, 0.10);
+  box-shadow: 0 2px 16px rgba(60, 80, 120, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
