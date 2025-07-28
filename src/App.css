@@ -1,60 +1,8 @@
-/* About section styling */
-.styled-about {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  padding: 2rem 1rem;
-  background: #f8f9fa;
-  border-radius: 1.2rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-  flex-wrap: wrap;
-}
-
-.about-image {
-  flex: 1 1 220px;
-  max-width: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.about-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.about-content {
-  flex: 2 1 320px;
-  min-width: 260px;
-  text-align: center;
-}
-
-.about-content h2 {
-  margin-bottom: 1rem;
-  font-size: 2rem;
-  color: #2d3a4a;
-}
-
-.about-content p {
-  font-size: 1.1rem;
-  color: #444;
-  line-height: 1.7;
-}
-
-@media (max-width: 900px) {
-  .styled-about {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.2rem 0.5rem;
-  }
-  .about-image, .about-content {
-    max-width: 100%;
-    min-width: 0;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+body, html, #root {
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 html, body {
   height: 100%;

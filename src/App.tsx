@@ -1,6 +1,7 @@
 
 
 import './App.css';
+import './style/about.css';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -8,7 +9,7 @@ import Home from './sections/Home';
 import Calendar from './sections/Calendar';
 import Contact from './sections/Contact';
 import NotFound from './sections/NotFound';
-import About from './sections/about';
+import About from './sections/About';
 
 
 const App = () => {
