@@ -1,0 +1,284 @@
+/* Header styles (desktop-first with mobile adaptations) */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: none;
+  min-height: 90px;
+  padding: 0;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 1.2rem 3.5vw 0.5rem 3.5vw;
+    gap: 1rem;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2.5rem;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &__logo {
+    height: 96px;
+    width: 96px;
+    display: block;
+  }
+
+  &__nav {
+    justify-self: center;
+  }
+
+  &__links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1.18rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: #1a2233;
+    padding: 0.3em 0.7em 0.15em 0.7em;
+    border-bottom: 2.5px solid transparent;
+    transition: border-bottom 0.2s, color 0.2s;
+    display: inline-block;
+
+    &:hover,
+    &.is-active {
+      border-bottom-color: #f59e42;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    justify-content: flex-end;
+  }
+
+  &__phones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 1.08rem;
+    color: #1a2233;
+    gap: 0.4em;
+  }
+
+  &__socials {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .social {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px;
+    transition: box-shadow 0.2s;
+
+    img {
+      height: 36px;
+      width: auto;
+      display: block;
+      border-radius: 8px; // for instagram square icon fit
+    }
+  }
+
+  .social--facebook {
+    box-shadow: 0 2px 8px 0 rgba(24, 119, 242, 0.1);
+
+    &:hover {
+      box-shadow: 0 4px 16px 0 rgba(24, 119, 242, 0.18);
+    }
+  }
+
+  .social--instagram {
+    box-shadow: 0 2px 8px 0 rgba(225, 48, 108, 0.1);
+
+    &:hover {
+      box-shadow: 0 4px 16px 0 rgba(225, 48, 108, 0.18);
+    }
+  }
+
+  /* Burger button (hidden on desktop) */
+  &__burger {
+    display: none;
+    width: 44px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    padding: 4px;
+
+    span {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      height: 3px;
+      background: #1a2233;
+      border-radius: 2px;
+      transition: transform 0.25s ease, top 0.25s ease, opacity 0.2s;
+
+      &:nth-child(1) {
+        top: 9px;
+      }
+      &:nth-child(2) {
+        top: 16px;
+      }
+      &:nth-child(3) {
+        top: 23px;
+      }
+    }
+
+    &.is-open {
+      span:nth-child(1) {
+        top: 16px;
+        transform: rotate(45deg);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:nth-child(3) {
+        top: 16px;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
+
+/* Mobile menu (overlay) */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 999;
+
+  &.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &__content {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: min(86vw, 420px);
+    background: #fff;
+    box-shadow: -10px 0 24px rgba(0, 0, 0, 0.12);
+    padding: 1.2rem 1rem 1.2rem 1rem;
+    transform: translateX(100%);
+    transition: transform 0.28s ease;
+  }
+
+  &.is-open &__content {
+    transform: translateX(0);
+  }
+
+  &__links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  &__link {
+    display: block;
+    padding: 0.9rem 0.6rem;
+    text-decoration: none;
+    color: #1a2233;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+
+    &:hover {
+      background: #f5f7fa;
+    }
+    &.is-active {
+      color: #f59e42;
+    }
+  }
+
+  &__phones {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.6rem 0 1rem 0;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  &__close {
+    margin-top: 0.4rem;
+    background: #1a2233;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .header {
+    &__inner {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    &__phones {
+      display: none;
+    }
+    &__nav {
+      display: none;
+    }
+
+    &__burger {
+      display: inline-block;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .header {
+    &__logo {
+      height: 72px;
+      width: 72px;
+    }
+    &__inner {
+      padding: 0.6rem 4vw;
+    }
+  }
+}
+
+/* Subtle polish for phone chip on mobile stacking context */
+.phone-chip {
+  will-change: transform, box-shadow;
+}
