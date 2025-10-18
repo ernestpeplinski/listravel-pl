@@ -16,16 +16,23 @@ const daysBetween = (start: Date, end: Date) => {
     Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
   return ms;
 };
+const startOfDay = (d: Date) =>
+  new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const addDays = (d: Date, days: number) =>
+  new Date(d.getFullYear(), d.getMonth(), d.getDate() + days);
 
 const Calendar: React.FC = () => {
   const [modal, setModal] = useState<ModalState>({ open: false });
 
+  const today = startOfDay(new Date());
+
   const trips = useMemo(
     () =>
-      [...tripsData].sort(
-        (a, b) => a.startDate.getTime() - b.startDate.getTime()
-      ),
-    []
+      [...tripsData]
+        // show until the end date (inclusive); hide starting the next day
+        .filter((t) => today < addDays(t.endDate, 1))
+        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime()),
+    [today]
   );
 
   return (

@@ -49,8 +49,24 @@
 }
 
 .trip-card__title {
-  margin: 0 0 0.5rem;
-  font-size: 1.05rem;
+  margin: 0 0 0.6rem;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #1f2937; /* dark gray for better contrast */
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.trip-card__title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  width: 3px;
+  background: #ff7000; /* brand accent */
+  border-radius: 2px;
 }
 
 .trip-card__meta {
@@ -68,8 +84,16 @@
 }
 
 .trip-card__price {
-  font-weight: 600;
-  margin: 0.25rem 0 0.75rem;
+  display: inline-block;
+  font-weight: 700;
+  margin: 0.35rem 0 0.9rem;
+  color: #e96500;
+  background: #fff4e8;
+  border: 1px solid #ffd8b5;
+  padding: 0.25rem 0.55rem;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
 }
 
 .trip-card__button {
