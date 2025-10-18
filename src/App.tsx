@@ -1,15 +1,35 @@
 
-import logo from './assets/logo_1000x1000.png'
-import './App.css'
 
-function App() {
+import './App.css';
+import './style/about.css';
+import Footer from './layout/Footer';
+import Header from './layout/Header';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './sections/Home';
+import Calendar from './sections/Calendar';
+import Contact from './sections/Contact';
+import NotFound from './sections/NotFound';
+import About from './sections/About';
+
+
+const App = () => {
   return (
-    <div id="root">
-      <img src={logo} className="logo" alt="Logo" />
-      <h2>Strona w budowie</h2>
-      <p>Będzie dostępna wkrótce.</p>
-    </div>
-  )
-}
+    <Router>
+      <div className="app-wrapper">
+        <Header />
+        <div style={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/kalendarz" element={<Calendar />} />
+            <Route path="/o-nas" element={<About />} />
+            <Route path="/kontakt" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </Router>
+  );
+};
 
-export default App
+export default App;
