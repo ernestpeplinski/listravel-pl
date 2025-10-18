@@ -3,10 +3,14 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 1000;
-  background: none;
+  z-index: 2000; // keep above mobile overlay
+  background: #ffffff; // opaque header so content doesn't show through
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); // subtle separation from content
   min-height: 90px;
   padding: 0;
+  --header-h: 90px; // used by mobile overlay to offset
+  --logo-size: 128px; // visual logo size can exceed header height to overflow
+  // Larger visual logo size without interaction effects
 
   &__inner {
     display: grid;
@@ -14,6 +18,8 @@
     align-items: center;
     padding: 1.2rem 3.5vw 0.5rem 3.5vw;
     gap: 1rem;
+    height: var(--header-h); // keep header height constant
+    overflow: visible; // allow logo to overflow outside header
   }
 
   &__brand {
@@ -21,16 +27,20 @@
     align-items: center;
     justify-content: flex-start;
     gap: 2.5rem;
+    overflow: visible; // allow large logo to protrude outside header height
 
     a {
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
     }
   }
 
   &__logo {
-    height: 96px;
-    width: 96px;
+    height: var(--logo-size);
+    width: auto;
     display: block;
+    // No extra transforms; simple large logo
   }
 
   &__nav {
@@ -166,7 +176,10 @@
 /* Mobile menu (overlay) */
 .mobile-menu {
   position: fixed;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: var(--header-h); // start below header
+  bottom: 0;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(2px);
   opacity: 0;
@@ -268,9 +281,11 @@
 
 @media (max-width: 560px) {
   .header {
+    --header-h: 72px;
+    --logo-size: 96px; // still larger than header for overflow effect
     &__logo {
-      height: 72px;
-      width: 72px;
+      height: var(--logo-size);
+      width: auto;
     }
     &__inner {
       padding: 0.6rem 4vw;
