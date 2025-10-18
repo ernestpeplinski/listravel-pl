@@ -26,6 +26,7 @@ const PhoneChip: React.FC<PhoneChipProps> = ({
         gap: 10,
         background: `linear-gradient(90deg, #f5f7fa 60%, ${color}22 100%)`,
         borderRadius: 16,
+        border: `1px solid ${hovered ? color + "55" : color + "33"}`,
         padding: "0.22em 1.25em 0.22em 0.7em",
         boxShadow:
           boxShadow +
