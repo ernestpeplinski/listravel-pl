@@ -52,6 +52,9 @@ const Calendar: React.FC = () => {
               />
               <div className="trip-card__body">
                 <h3 className="trip-card__title">{t.title}</h3>
+                {t.description && (
+                  <p className="trip-card__description">{t.description}</p>
+                )}
                 <div className="trip-card__meta">
                   <svg
                     className="trip-card__meta-icon"
