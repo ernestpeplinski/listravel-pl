@@ -19,6 +19,7 @@ export interface Trip {
   price: number;
   imageUrl: string;
   thumbnailUrl?: string;
+  cancelled?: boolean;
 }
 
 export const trips: Trip[] = [
@@ -30,6 +31,7 @@ export const trips: Trip[] = [
     price: 200,
     imageUrl: borneSulinowoImg,
     thumbnailUrl: borneSulinowoThumb,
+    cancelled: true,
   },
   {
     startDate: new Date("2025-11-08"),

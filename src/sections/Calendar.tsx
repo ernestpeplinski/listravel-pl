@@ -43,7 +43,15 @@ const Calendar: React.FC = () => {
         {trips.map((t, i) => {
           const days = daysBetween(t.startDate, t.endDate);
           return (
-            <article className="trip-card" key={i}>
+            <article
+              className={`trip-card ${
+                t.cancelled ? "trip-card--cancelled" : ""
+              }`}
+              key={i}
+            >
+              {t.cancelled && (
+                <div className="trip-card__cancelled-badge">ODWOŁANE</div>
+              )}
               <img
                 className="trip-card__image"
                 src={t.thumbnailUrl ?? t.imageUrl}
