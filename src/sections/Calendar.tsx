@@ -23,10 +23,11 @@ const addDays = (d: Date, days: number) =>
 
 const Calendar: React.FC = () => {
   const [modal, setModal] = useState<ModalState>({ open: false });
+  const [showArchive, setShowArchive] = useState(false);
 
   const today = startOfDay(new Date());
 
-  const trips = useMemo(
+  const upcomingTrips = useMemo(
     () =>
       [...tripsData]
         // show until the end date (inclusive); hide starting the next day
@@ -35,15 +36,63 @@ const Calendar: React.FC = () => {
     [today]
   );
 
+  const archiveTrips = useMemo(
+    () =>
+      [...tripsData]
+        .filter((t) => today >= addDays(t.endDate, 1))
+        .sort((a, b) => b.startDate.getTime() - a.startDate.getTime()),
+    [today]
+  );
+
+  const trips = showArchive ? archiveTrips : upcomingTrips;
+
   return (
     <section className="calendar">
       <h2 style={{ textAlign: "center" }}>Kalendarz</h2>
+
+      <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+        <button
+          className="calendar__archive-toggle"
+          onClick={() => setShowArchive(!showArchive)}
+        >
+          {showArchive
+            ? "Pokaż nadchodzące wycieczki"
+            : "Pokaż archiwalne wycieczki"}
+        </button>
+        {showArchive && archiveTrips.length > 0 && (
+          <p
+            style={{ marginTop: "0.5rem", color: "#666", fontSize: "0.95rem" }}
+          >
+            Wyświetlanie {archiveTrips.length}{" "}
+            {archiveTrips.length === 1
+              ? "archiwalnej wycieczki"
+              : archiveTrips.length < 5
+              ? "archiwalnych wycieczek"
+              : "archiwalnych wycieczek"}
+          </p>
+        )}
+        {showArchive && archiveTrips.length === 0 && (
+          <p
+            style={{ marginTop: "0.5rem", color: "#666", fontSize: "0.95rem" }}
+          >
+            Brak archiwalnych wycieczek
+          </p>
+        )}
+      </div>
 
       <div className="calendar__grid">
         {trips.map((t, i) => {
           const days = daysBetween(t.startDate, t.endDate);
           return (
-            <article className="trip-card" key={i}>
+            <article
+              className={`trip-card ${
+                t.cancelled ? "trip-card--cancelled" : ""
+              }`}
+              key={i}
+            >
+              {t.cancelled && (
+                <div className="trip-card__cancelled-badge">ODWOŁANE</div>
+              )}
               <img
                 className="trip-card__image"
                 src={t.thumbnailUrl ?? t.imageUrl}
@@ -52,6 +101,9 @@ const Calendar: React.FC = () => {
               />
               <div className="trip-card__body">
                 <h3 className="trip-card__title">{t.title}</h3>
+                {t.description && (
+                  <p className="trip-card__description">{t.description}</p>
+                )}
                 <div className="trip-card__meta">
                   <svg
                     className="trip-card__meta-icon"
