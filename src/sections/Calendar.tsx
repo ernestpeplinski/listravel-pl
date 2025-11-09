@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
-import { trips as tripsData, type Trip } from "../data/trips";
+import { useTrips } from "../hooks/useTrips";
+import type { Trip } from "../types/trip";
 import "../style/calendar.css";
 
 type ModalState = { open: true; trip: Trip } | { open: false };
@@ -24,6 +25,7 @@ const addDays = (d: Date, days: number) =>
 const Calendar: React.FC = () => {
   const [modal, setModal] = useState<ModalState>({ open: false });
   const [showArchive, setShowArchive] = useState(false);
+  const { trips: tripsData, loading, error } = useTrips();
 
   const today = startOfDay(new Date());
 
@@ -33,7 +35,7 @@ const Calendar: React.FC = () => {
         // show until the end date (inclusive); hide starting the next day
         .filter((t) => today < addDays(t.endDate, 1))
         .sort((a, b) => a.startDate.getTime() - b.startDate.getTime()),
-    [today]
+    [tripsData, today]
   );
 
   const archiveTrips = useMemo(
@@ -41,10 +43,28 @@ const Calendar: React.FC = () => {
       [...tripsData]
         .filter((t) => today >= addDays(t.endDate, 1))
         .sort((a, b) => b.startDate.getTime() - a.startDate.getTime()),
-    [today]
+    [tripsData, today]
   );
 
   const trips = showArchive ? archiveTrips : upcomingTrips;
+
+  if (loading) {
+    return (
+      <section className="calendar">
+        <h2 style={{ textAlign: "center" }}>Kalendarz</h2>
+        <p style={{ textAlign: "center" }}>Ładowanie wycieczek...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="calendar">
+        <h2 style={{ textAlign: "center" }}>Kalendarz</h2>
+        <p style={{ textAlign: "center", color: "red" }}>{error}</p>
+      </section>
+    );
+  }
 
   return (
     <section className="calendar">
