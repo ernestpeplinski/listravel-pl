@@ -46,7 +46,54 @@ const Calendar: React.FC = () => {
     [tripsData, today]
   );
 
-  const trips = showArchive ? archiveTrips : upcomingTrips;
+  // Group trips by month and year
+  const groupTripsByMonth = (trips: Trip[]) => {
+    const groups: { [key: string]: Trip[] } = {};
+
+    trips.forEach((trip) => {
+      const date = trip.startDate;
+      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}`;
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+      groups[key].push(trip);
+    });
+
+    return groups;
+  };
+
+  const formatMonthYear = (key: string) => {
+    const [year, month] = key.split("-");
+    const monthNames = [
+      "Styczeń",
+      "Luty",
+      "Marzec",
+      "Kwiecień",
+      "Maj",
+      "Czerwiec",
+      "Lipiec",
+      "Sierpień",
+      "Wrzesień",
+      "Październik",
+      "Listopad",
+      "Grudzień",
+    ];
+    return `${monthNames[parseInt(month) - 1]} ${year}`;
+  };
+
+  const upcomingGrouped = useMemo(
+    () => groupTripsByMonth(upcomingTrips),
+    [upcomingTrips]
+  );
+  const archivedGrouped = useMemo(
+    () => groupTripsByMonth(archiveTrips),
+    [archiveTrips]
+  );
+
+  const groupedTrips = showArchive ? archivedGrouped : upcomingGrouped;
 
   if (loading) {
     return (
@@ -100,72 +147,92 @@ const Calendar: React.FC = () => {
         )}
       </div>
 
-      <div className="calendar__grid">
-        {trips.map((t, i) => {
-          const days = daysBetween(t.startDate, t.endDate);
-          return (
-            <article
-              className={`trip-card ${
-                t.cancelled ? "trip-card--cancelled" : ""
-              }`}
-              key={i}
-            >
-              {t.cancelled && (
-                <div className="trip-card__cancelled-badge">ODWOŁANE</div>
-              )}
-              <img
-                className="trip-card__image"
-                src={t.thumbnailUrl ?? t.imageUrl}
-                alt={t.title}
-                loading="lazy"
-              />
-              <div className="trip-card__body">
-                <h3 className="trip-card__title">{t.title}</h3>
-                {t.description && (
-                  <p className="trip-card__description">{t.description}</p>
-                )}
-                <div className="trip-card__meta">
-                  <svg
-                    className="trip-card__meta-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <rect
-                      x="3"
-                      y="4"
-                      width="18"
-                      height="18"
-                      rx="2"
-                      ry="2"
-                    ></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                  </svg>
-                  {formatDate(t.startDate)} – {formatDate(t.endDate)} ({days}{" "}
-                  {days === 1 ? "dzień" : days < 5 ? "dni" : "dni"})
-                </div>
-                <div className="trip-card__price">
-                  Cena: {t.price.toLocaleString("pl-PL")} zł
-                </div>
-                <button
-                  className="trip-card__button"
-                  onClick={() => setModal({ open: true as const, trip: t })}
-                >
-                  Zobacz szczegóły
-                </button>
+      <div>
+        {Object.keys(groupedTrips)
+          .sort((a, b) =>
+            showArchive ? b.localeCompare(a) : a.localeCompare(b)
+          )
+          .map((monthKey) => (
+            <div key={monthKey} className="calendar__month-group">
+              <h3 className="calendar__month-title">
+                {formatMonthYear(monthKey)}
+              </h3>
+              <div className="calendar__grid">
+                {groupedTrips[monthKey].map((t, i) => {
+                  const days = daysBetween(t.startDate, t.endDate);
+                  return (
+                    <article
+                      className={`trip-card ${
+                        t.cancelled ? "trip-card--cancelled" : ""
+                      }`}
+                      key={i}
+                    >
+                      {t.cancelled && (
+                        <div className="trip-card__cancelled-badge">
+                          ODWOŁANE
+                        </div>
+                      )}
+                      <img
+                        className="trip-card__image"
+                        src={t.thumbnailUrl ?? t.imageUrl}
+                        alt={t.title}
+                        loading="lazy"
+                      />
+                      <div className="trip-card__body">
+                        <h3 className="trip-card__title">{t.title}</h3>
+                        {t.description && (
+                          <p className="trip-card__description">
+                            {t.description}
+                          </p>
+                        )}
+                        <div className="trip-card__meta">
+                          <svg
+                            className="trip-card__meta-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <rect
+                              x="3"
+                              y="4"
+                              width="18"
+                              height="18"
+                              rx="2"
+                              ry="2"
+                            ></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                          </svg>
+                          {formatDate(t.startDate)} – {formatDate(t.endDate)} (
+                          {days}{" "}
+                          {days === 1 ? "dzień" : days < 5 ? "dni" : "dni"})
+                        </div>
+                        <div className="trip-card__price">
+                          Cena: {t.price.toLocaleString("pl-PL")} zł
+                        </div>
+                        <button
+                          className="trip-card__button"
+                          onClick={() =>
+                            setModal({ open: true as const, trip: t })
+                          }
+                        >
+                          Zobacz szczegóły
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
-            </article>
-          );
-        })}
+            </div>
+          ))}
       </div>
 
       {modal.open && (

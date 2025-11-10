@@ -27,6 +27,23 @@
   transform: translateY(0);
 }
 
+.calendar__month-group {
+  margin-bottom: 2rem;
+}
+
+.calendar__month-group:last-child {
+  margin-bottom: 0;
+}
+
+.calendar__month-title {
+  font-size: clamp(16px, 3.5vw, 20px);
+  color: #555;
+  margin: 0 0 1rem;
+  font-weight: 600;
+  padding-left: 0.5rem;
+  border-left: 4px solid #ff7000;
+}
+
 .calendar__grid {
   display: grid;
   /* Center cards and avoid stretching each to full width */
